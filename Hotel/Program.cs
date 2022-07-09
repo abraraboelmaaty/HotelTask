@@ -11,6 +11,8 @@ builder.Services.AddDbContext<HotelEnteties>(h => h
                 .UseSqlServer(builder.Configuration.GetConnectionString("HotelConn")));
 builder.Services.AddScoped<IRepository<Branch>, BranchRepo>();
 builder.Services.AddScoped<IRepoGetByLocation<Branch>, BranchRepo>();
+builder.Services.AddScoped<IRepository<Room>, RoomRepo>();
+builder.Services.AddScoped<IRepoGetByNumber<Room>,RoomRepo>();
 
 builder.Services.AddCors(options =>
 {

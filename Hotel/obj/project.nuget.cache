@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "dO1/KJQfKCQQXeiJswyNNuC54eeo0hdEbUbtoubWh5ZVkCSsejS9K+NMboQf+1B0uvtDutqIM6FNv8m2uQSXdA==",
+  "dgSpecHash": "6X5zqkJMRWdyuE42tBT6FnV4oalJmbyysPCn9IokW3+ug1qlukPxXjLvmWB6xOR0lj+im+k8oTNwrC8m8zmuXw==",
   "success": true,
-  "projectFilePath": "H:\\ابرار\\ITI\\Hotel\\Hotel\\Hotel\\Hotel.csproj",
+  "projectFilePath": "H:\\ابرار\\ITI\\Hotel\\Hotel\\HotelTask\\Hotel\\Hotel.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\CRIZMA MEGA STORE\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\CRIZMA MEGA STORE\\.nuget\\packages\\microsoft.csharp\\4.5.0\\microsoft.csharp.4.5.0.nupkg.sha512",

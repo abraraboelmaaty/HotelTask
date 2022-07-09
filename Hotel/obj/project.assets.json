@@ -2066,11 +2066,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "H:\\ابرار\\ITI\\Hotel\\Hotel\\Hotel\\Hotel.csproj",
+      "projectUniqueName": "H:\\ابرار\\ITI\\Hotel\\Hotel\\HotelTask\\Hotel\\Hotel.csproj",
       "projectName": "Hotel",
-      "projectPath": "H:\\ابرار\\ITI\\Hotel\\Hotel\\Hotel\\Hotel.csproj",
+      "projectPath": "H:\\ابرار\\ITI\\Hotel\\Hotel\\HotelTask\\Hotel\\Hotel.csproj",
       "packagesPath": "C:\\Users\\CRIZMA MEGA STORE\\.nuget\\packages\\",
-      "outputPath": "H:\\ابرار\\ITI\\Hotel\\Hotel\\Hotel\\obj\\",
+      "outputPath": "H:\\ابرار\\ITI\\Hotel\\Hotel\\HotelTask\\Hotel\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\CRIZMA MEGA STORE\\AppData\\Roaming\\NuGet\\NuGet.Config",

@@ -15,9 +15,10 @@ namespace Hotel.Models
         [JsonIgnore]
         public int? TypeId { get; set; }
         [JsonIgnore]
-        public virtual Type? Type { get; set; }
+        public virtual RoomType? Type { get; set; }
         [JsonIgnore]
         public virtual List<Booking>? Bokings {get;set;}
+        [JsonIgnore]
         public virtual Branch? Branch { get; set; }
         
     }
