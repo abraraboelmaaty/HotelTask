@@ -8,11 +8,14 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddDbContext<HotelEnteties>(h => h
-                .UseSqlServer(builder.Configuration.GetConnectionString("HotelConn")));
+                .UseSqlServer(builder.Configuration.GetConnectionString("HotelConn"))
+                .UseValidationCheckConstraints()
+                .UseEnumCheckConstraints());
 builder.Services.AddScoped<IRepository<Branch>, BranchRepo>();
 builder.Services.AddScoped<IRepoGetByLocation<Branch>, BranchRepo>();
 builder.Services.AddScoped<IRepository<Room>, RoomRepo>();
 builder.Services.AddScoped<IRepoGetByNumber<Room>,RoomRepo>();
+builder.Services.AddScoped<IRepoGetByTpe<Room>, RoomRepo>();
 
 builder.Services.AddCors(options =>
 {

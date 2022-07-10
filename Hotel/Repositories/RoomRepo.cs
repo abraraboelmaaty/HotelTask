@@ -1,8 +1,9 @@
-﻿using Hotel.Models;
+﻿using Hotel.Data;
+using Hotel.Models;
 
 namespace Hotel.Repositories
 {
-    public class RoomRepo : IRepository<Room>  ,IRepoGetByNumber<Room>
+    public class RoomRepo : IRepository<Room>  ,IRepoGetByNumber<Room>,IRepoGetByTpe<Room>
     {
         HotelEnteties context;
         public RoomRepo(HotelEnteties _context)
@@ -10,6 +11,9 @@ namespace Hotel.Repositories
             context = _context;
 
         }
+
+       
+
         public int creat(Room room)
         {
             context.Add(room);
@@ -52,6 +56,11 @@ namespace Hotel.Repositories
         public ICollection<Room> getAllByNumber(int number)
         {
             return context.Rooms.Where(r => r.Number == number).ToList();
+        }
+
+        public ICollection<Room> getAllByType(RoomType type)
+        {
+            return context.Rooms.Where(r => r.RoomType == type).ToList();
         }
 
         public Room getById(int id)

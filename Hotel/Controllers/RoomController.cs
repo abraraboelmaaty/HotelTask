@@ -1,4 +1,5 @@
-﻿using Hotel.Models;
+﻿using Hotel.Data;
+using Hotel.Models;
 using Hotel.Repositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -11,10 +12,12 @@ namespace Hotel.Controllers
     {
         IRepository<Room> RoomRepo;
         IRepoGetByNumber<Room> RoomRepoNumber;
-        public RoomController(IRepoGetByNumber<Room> _RoomRepoNumber , IRepository<Room> _RoomRepo)
+        IRepoGetByTpe<Room> RoomRepoByType;
+        public RoomController(IRepoGetByNumber<Room> _RoomRepoNumber , IRepository<Room> _RoomRepo, IRepoGetByTpe<Room> _RoomRepoByType)
         {
             RoomRepoNumber = _RoomRepoNumber;
             RoomRepo = _RoomRepo;
+            RoomRepoByType = _RoomRepoByType;
         }
         [HttpGet]
         public ActionResult getAll()
@@ -34,6 +37,18 @@ namespace Hotel.Controllers
             if (RoomRepoNumber.getAllByNumber(number).Count > 0)
             {
                 return Ok(RoomRepoNumber.getAllByNumber(number));
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
+        [HttpGet]
+        public ActionResult getAllByType(RoomType type)
+        {
+            if (RoomRepoByType.getAllByType(type).Count > 0)
+            {
+                return Ok(RoomRepoByType.getAllByType(type));
             }
             else
             {

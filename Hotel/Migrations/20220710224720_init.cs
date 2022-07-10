@@ -39,19 +39,6 @@ namespace Hotel.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Types",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Types", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Rooms",
                 columns: table => new
                 {
@@ -59,24 +46,19 @@ namespace Hotel.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Number = table.Column<int>(type: "int", nullable: false),
-                    BranchId = table.Column<int>(type: "int", nullable: true),
-                    TypeId = table.Column<int>(type: "int", nullable: true)
+                    RoomType = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
+                    Avilable = table.Column<bool>(type: "bit", nullable: false, defaultValue: true),
+                    BranchId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Rooms", x => x.Id);
+                    table.CheckConstraint("CK_Rooms_RoomType_Enum", "[RoomType] IN (N'Single', N'Double', N'Suite')");
                     table.ForeignKey(
                         name: "FK_Rooms_Branches_BranchId",
                         column: x => x.BranchId,
                         principalTable: "Branches",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Rooms_Types_TypeId",
-                        column: x => x.TypeId,
-                        principalTable: "Types",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -114,11 +96,6 @@ namespace Hotel.Migrations
                 name: "IX_Rooms_BranchId",
                 table: "Rooms",
                 column: "BranchId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Rooms_TypeId",
-                table: "Rooms",
-                column: "TypeId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -134,9 +111,6 @@ namespace Hotel.Migrations
 
             migrationBuilder.DropTable(
                 name: "Branches");
-
-            migrationBuilder.DropTable(
-                name: "Types");
         }
     }
 }

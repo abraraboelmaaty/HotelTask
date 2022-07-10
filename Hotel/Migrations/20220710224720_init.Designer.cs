@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Hotel.Migrations
 {
     [DbContext(typeof(HotelEnteties))]
-    [Migration("20220709013741_updateRoomModel")]
-    partial class updateRoomModel
+    [Migration("20220710224720_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -99,6 +99,11 @@ namespace Hotel.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<bool>("Avilable")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(true);
+
                     b.Property<int?>("BranchId")
                         .HasColumnType("int");
 
@@ -109,33 +114,18 @@ namespace Hotel.Migrations
                     b.Property<int>("Number")
                         .HasColumnType("int");
 
-                    b.Property<int?>("TypeId")
-                        .HasColumnType("int");
+                    b.Property<string>("RoomType")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("BranchId");
 
-                    b.HasIndex("TypeId");
-
                     b.ToTable("Rooms");
-                });
 
-            modelBuilder.Entity("Hotel.Models.RoomType", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Types");
+                    b.HasCheckConstraint("CK_Rooms_RoomType_Enum", "[RoomType] IN (N'Single', N'Double', N'Suite')");
                 });
 
             modelBuilder.Entity("Hotel.Models.Booking", b =>
@@ -159,17 +149,9 @@ namespace Hotel.Migrations
                 {
                     b.HasOne("Hotel.Models.Branch", "Branch")
                         .WithMany("Rooms")
-                        .HasForeignKey("BranchId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("Hotel.Models.RoomType", "Type")
-                        .WithMany("Rooms")
-                        .HasForeignKey("TypeId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasForeignKey("BranchId");
 
                     b.Navigation("Branch");
-
-                    b.Navigation("Type");
                 });
 
             modelBuilder.Entity("Hotel.Models.Branch", b =>
@@ -185,11 +167,6 @@ namespace Hotel.Migrations
             modelBuilder.Entity("Hotel.Models.Room", b =>
                 {
                     b.Navigation("Bokings");
-                });
-
-            modelBuilder.Entity("Hotel.Models.RoomType", b =>
-                {
-                    b.Navigation("Rooms");
                 });
 #pragma warning restore 612, 618
         }
