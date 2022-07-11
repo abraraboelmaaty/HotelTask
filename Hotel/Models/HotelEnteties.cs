@@ -1,14 +1,16 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 
 namespace Hotel.Models
 {
-    public class HotelEnteties:DbContext
+    public class HotelEnteties:IdentityDbContext<ApplicationUser>
     {
         public HotelEnteties() : base()
         { }
         public HotelEnteties(DbContextOptions options) : base(options)
         { }
-        public DbSet<Customer> Coustomers { get; set; }
+        //public DbSet<Customer> Coustomers { get; set; }
+        public DbSet<ApplicationUser> ApplicationUsers { get; set; }
         public DbSet<Booking> Bookings { get; set; }
         public DbSet<Room> Rooms { get; set; }
         //public DbSet<RoomType> Types { get; set; }
@@ -17,11 +19,11 @@ namespace Hotel.Models
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Booking>()
-                .HasKey(b => new { b.CustomerId, b.RoomId });
+                .HasKey(b => new { b.UserId, b.RoomId });
             modelBuilder.Entity<Booking>()
-                       .HasOne(B => B.Customer)
-                       .WithMany(CU => CU.Bokings)
-                       .HasForeignKey(B => B.CustomerId)
+                       .HasOne(B => B.ApplicationUser)
+                       .WithMany(AP => AP.Bokings)
+                       .HasForeignKey(B => B.UserId)
                        .OnDelete(DeleteBehavior.Restrict)
                        .IsRequired(false);
             modelBuilder.Entity<Booking>()
@@ -50,6 +52,7 @@ namespace Hotel.Models
             modelBuilder.Entity<Room>()
               .Property(r => r.Avilable)
               .HasDefaultValue(true);
+            base.OnModelCreating(modelBuilder);
         }
     }
 }
