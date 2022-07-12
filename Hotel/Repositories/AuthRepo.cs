@@ -78,7 +78,7 @@ namespace Hotel.Repositories
 
                 return new AuthModel { Message = errors };
             }
-            await userManager.AddToRoleAsync(user, "Customer");
+            await userManager.AddToRoleAsync(user, "User");
             var jwtSecurityToken = await CreateJwtToken(user);
 
 
@@ -90,7 +90,7 @@ namespace Hotel.Repositories
                 Email = user.Email,
                 ExpiresOn = jwtSecurityToken.ValidTo,
                 IsAuthenticated = true,
-                Roles = new List<string> { "Customer" },
+                Roles = new List<string> { "User" },
                 Token = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken),
                 Username = user.UserName,
 

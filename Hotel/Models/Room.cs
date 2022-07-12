@@ -12,8 +12,8 @@ namespace Hotel.Models
         public RoomType RoomType { get; set; }
         public bool Avilable { get; set; }  
         [ForeignKey("Branch")]
-        [JsonIgnore]
-        public virtual int? BranchId { get; set; }
+       
+        public virtual int BranchId { get; set; }
         //[ForeignKey("Type")]
         //[JsonIgnore]
         //public int? TypeId { get; set; }
