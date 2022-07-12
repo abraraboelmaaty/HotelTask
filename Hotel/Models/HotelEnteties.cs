@@ -19,8 +19,8 @@ namespace Hotel.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Booking>()
-                .HasKey(b => new { b.UserId, b.RoomId,b.BranchId });
+            //modelBuilder.Entity<Booking>()
+            //    .HasKey(b => new { b.UserId, b.RoomId,b.BranchId });
             modelBuilder.Entity<Booking>()
                        .HasOne(B => B.ApplicationUser)
                        .WithMany(AP => AP.Bokings)
@@ -50,9 +50,15 @@ namespace Hotel.Models
             modelBuilder.Entity<Room>()
                       .Property(r => r.Status)
                       .HasDefaultValue(RoomStatus.available);
-            modelBuilder.Entity<Booking>()
-                      .Property(b => b.Id)
-                      .ValueGeneratedOnAdd();
+            modelBuilder.Entity<Room>()
+                     .Property(r => r.CoustomerCount)
+                     .HasDefaultValue(0);
+            modelBuilder.Entity<Room>()
+                     .Property(r => r.CanBookingmore)
+                     .HasDefaultValue(false);
+            //modelBuilder.Entity<Booking>()
+            //          .Property(b => b.Id)
+            //          .ValueGeneratedOnAdd();
 
 
             base.OnModelCreating(modelBuilder);

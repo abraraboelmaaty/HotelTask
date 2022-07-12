@@ -12,6 +12,8 @@ namespace Hotel.Models
         public RoomType RoomType { get; set; }
         //public bool Avilable { get; set; } 
         public RoomStatus Status { get; set; }
+        public int CoustomerCount { get; set; }
+        public bool CanBookingmore { get; set; }
         [ForeignKey("Branch")]
        
         public virtual int BranchId { get; set; }

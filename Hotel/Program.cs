@@ -43,6 +43,7 @@ builder.Services.AddScoped<IRepoGetByNumber<Room>,RoomRepo>();
 builder.Services.AddScoped<IRepoGetByTpe<Room>, RoomRepo>();
 builder.Services.AddScoped<IRepository<Booking>, BookingRepo>();
 builder.Services.AddScoped<IRepoUpdateDelete<Booking>, BookingRepo>();
+builder.Services.AddScoped<IRepositoryBooking<Booking>, BookingRepo>();
 builder.Services.AddScoped<IAuthRepository, AuthRepo>();
 
 builder.Services.AddAuthentication(options =>

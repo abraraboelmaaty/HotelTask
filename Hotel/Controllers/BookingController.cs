@@ -12,10 +12,12 @@ namespace Hotel.Controllers
     {
         IRepository<Booking> BookingRepo;
         IRepoUpdateDelete<Booking> BookingUpdateDelete;
-        public BookingController(IRepository<Booking> _BookingRepo, IRepoUpdateDelete<Booking> _BookingUpdateDelete)
+        IRepositoryBooking<Booking> AddingBook;
+        public BookingController(IRepository<Booking> _BookingRepo, IRepoUpdateDelete<Booking> _BookingUpdateDelete, IRepositoryBooking<Booking> _AddingBook)
         {
             BookingRepo = _BookingRepo;
             BookingUpdateDelete = _BookingUpdateDelete;
+            AddingBook = _AddingBook;
         }
         //getall
         [HttpGet]
@@ -41,13 +43,33 @@ namespace Hotel.Controllers
 
         //create
         //[Authorize]
+        //[HttpPost]
+        //public ActionResult Create(Booking booking)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        BookingRepo.creat(booking);
+        //        return Created("url", booking);
+        //    }
+        //    else
+        //    {
+        //        return BadRequest(ModelState);
+        //    }
+        //}
         [HttpPost]
-        public ActionResult Create(Booking booking)
+        public ActionResult Create(Booking booking,int id)
         {
             if (ModelState.IsValid)
             {
-                BookingRepo.creat(booking);
-                return Created("url", booking);
+               if( AddingBook.booking(booking, id) < 1)
+                {
+                    return BadRequest(booking);
+                }
+                else
+                {
+                    return Created("url", booking);
+                }
+                
             }
             else
             {
