@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Hotel.Migrations
 {
     [DbContext(typeof(HotelEnteties))]
-    [Migration("20220712145246_updateModels")]
-    partial class updateModels
+    [Migration("20220712160015_updateContextFile")]
+    partial class updateContextFile
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -104,7 +104,10 @@ namespace Hotel.Migrations
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<int?>("RoomId")
+                    b.Property<int>("RoomId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("BranchId")
                         .HasColumnType("int");
 
                     b.Property<int>("Id")
@@ -119,7 +122,9 @@ namespace Hotel.Migrations
                     b.Property<DateTime>("startDate")
                         .HasColumnType("datetime2");
 
-                    b.HasKey("UserId", "RoomId");
+                    b.HasKey("UserId", "RoomId", "BranchId");
+
+                    b.HasIndex("BranchId");
 
                     b.HasIndex("RoomId");
 
@@ -151,12 +156,7 @@ namespace Hotel.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<bool>("Avilable")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(true);
-
-                    b.Property<int?>("BranchId")
+                    b.Property<int>("BranchId")
                         .HasColumnType("int");
 
                     b.Property<string>("Description")
@@ -171,6 +171,13 @@ namespace Hotel.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)")
+                        .HasDefaultValue("available");
+
                     b.HasKey("Id");
 
                     b.HasIndex("BranchId");
@@ -178,6 +185,8 @@ namespace Hotel.Migrations
                     b.ToTable("Rooms");
 
                     b.HasCheckConstraint("CK_Rooms_RoomType_Enum", "[RoomType] IN (N'Single', N'Double', N'Suite')");
+
+                    b.HasCheckConstraint("CK_Rooms_Status_Enum", "[Status] IN (N'available', N'booked')");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -315,6 +324,11 @@ namespace Hotel.Migrations
 
             modelBuilder.Entity("Hotel.Models.Booking", b =>
                 {
+                    b.HasOne("Hotel.Models.Branch", "Branch")
+                        .WithMany("Bookings")
+                        .HasForeignKey("BranchId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
                     b.HasOne("Hotel.Models.Room", "Room")
                         .WithMany("Bokings")
                         .HasForeignKey("RoomId")
@@ -327,6 +341,8 @@ namespace Hotel.Migrations
 
                     b.Navigation("ApplicationUser");
 
+                    b.Navigation("Branch");
+
                     b.Navigation("Room");
                 });
 
@@ -334,7 +350,9 @@ namespace Hotel.Migrations
                 {
                     b.HasOne("Hotel.Models.Branch", "Branch")
                         .WithMany("Rooms")
-                        .HasForeignKey("BranchId");
+                        .HasForeignKey("BranchId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Branch");
                 });
@@ -397,6 +415,8 @@ namespace Hotel.Migrations
 
             modelBuilder.Entity("Hotel.Models.Branch", b =>
                 {
+                    b.Navigation("Bookings");
+
                     b.Navigation("Rooms");
                 });
 

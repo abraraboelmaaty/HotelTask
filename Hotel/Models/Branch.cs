@@ -8,6 +8,8 @@ namespace Hotel.Models
         public string location { get; set; }
         [JsonIgnore]
         public virtual List<Room>? Rooms { get; set; }
+        [JsonIgnore]
+        public virtual List<Booking>? Bookings { get; set; }
 
     }
 }

@@ -10,7 +10,8 @@ namespace Hotel.Models
         public string Description { get; set; }
         public int Number { get; set; }
         public RoomType RoomType { get; set; }
-        public bool Avilable { get; set; }  
+        //public bool Avilable { get; set; } 
+        public RoomStatus Status { get; set; }
         [ForeignKey("Branch")]
        
         public virtual int BranchId { get; set; }

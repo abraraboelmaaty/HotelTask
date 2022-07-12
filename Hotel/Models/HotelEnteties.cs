@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Hotel.Data;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace Hotel.Models
@@ -19,7 +20,7 @@ namespace Hotel.Models
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Booking>()
-                .HasKey(b => new { b.UserId, b.RoomId });
+                .HasKey(b => new { b.UserId, b.RoomId,b.BranchId });
             modelBuilder.Entity<Booking>()
                        .HasOne(B => B.ApplicationUser)
                        .WithMany(AP => AP.Bokings)
@@ -32,13 +33,23 @@ namespace Hotel.Models
                       .HasForeignKey(B => B.RoomId)
                       .OnDelete(DeleteBehavior.Restrict)
                       .IsRequired(false);
+            modelBuilder.Entity<Booking>()
+                     .HasOne(BO => BO.Branch)
+                     .WithMany(BR => BR.Bookings)
+                     .HasForeignKey(BO => BO.BranchId)
+                     .OnDelete(DeleteBehavior.Restrict)
+                     .IsRequired(false);
             modelBuilder.Entity<Room>()
                       .Property(r => r.RoomType)
                       .HasConversion<string>()
                       .HasMaxLength(20);
             modelBuilder.Entity<Room>()
-                      .Property(r => r.Avilable)
-                      .HasDefaultValue(true);
+                      .Property(r => r.Status)
+                      .HasConversion<string>()
+                      .HasMaxLength(20);
+            modelBuilder.Entity<Room>()
+                      .Property(r => r.Status)
+                      .HasDefaultValue(RoomStatus.available);
             modelBuilder.Entity<Booking>()
                       .Property(b => b.Id)
                       .ValueGeneratedOnAdd();

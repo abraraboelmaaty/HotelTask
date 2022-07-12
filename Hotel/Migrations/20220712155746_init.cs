@@ -178,18 +178,20 @@ namespace Hotel.Migrations
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Number = table.Column<int>(type: "int", nullable: false),
                     RoomType = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
-                    Avilable = table.Column<bool>(type: "bit", nullable: false, defaultValue: true),
-                    BranchId = table.Column<int>(type: "int", nullable: true)
+                    Status = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
+                    BranchId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Rooms", x => x.Id);
                     table.CheckConstraint("CK_Rooms_RoomType_Enum", "[RoomType] IN (N'Single', N'Double', N'Suite')");
+                    table.CheckConstraint("CK_Rooms_Status_Enum", "[Status] IN (0, 1)");
                     table.ForeignKey(
                         name: "FK_Rooms_Branches_BranchId",
                         column: x => x.BranchId,
                         principalTable: "Branches",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -198,6 +200,7 @@ namespace Hotel.Migrations
                 {
                     RoomId = table.Column<int>(type: "int", nullable: false),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    BranchId = table.Column<int>(type: "int", nullable: false),
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     startDate = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -205,11 +208,17 @@ namespace Hotel.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Bookings", x => new { x.UserId, x.RoomId });
+                    table.PrimaryKey("PK_Bookings", x => new { x.UserId, x.RoomId, x.BranchId });
                     table.ForeignKey(
                         name: "FK_Bookings_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Bookings_Branches_BranchId",
+                        column: x => x.BranchId,
+                        principalTable: "Branches",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
@@ -258,6 +267,11 @@ namespace Hotel.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Bookings_BranchId",
+                table: "Bookings",
+                column: "BranchId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Bookings_RoomId",
