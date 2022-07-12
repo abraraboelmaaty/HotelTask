@@ -1,5 +1,6 @@
 ﻿using Hotel.Models;
 using Hotel.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -25,7 +26,7 @@ namespace Hotel.Controllers
             else
                 return NotFound();
         }
-        
+
         //getById
         [HttpGet("{id:int}")]
         public ActionResult getById(int id)
@@ -37,8 +38,9 @@ namespace Hotel.Controllers
                 return Ok(booking);
 
         }
-       
+
         //create
+        //[Authorize]
         [HttpPost]
         public ActionResult Create(Booking booking)
         {

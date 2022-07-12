@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Hotel.Migrations
 {
     [DbContext(typeof(HotelEnteties))]
-    [Migration("20220711150131_seedRoles")]
-    partial class seedRoles
+    [Migration("20220712144251_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -101,14 +101,17 @@ namespace Hotel.Migrations
 
             modelBuilder.Entity("Hotel.Models.Booking", b =>
                 {
-                    b.Property<int?>("CustomerId")
-                        .HasColumnType("int");
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int?>("RoomId")
                         .HasColumnType("int");
 
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<DateTime>("endDate")
                         .HasColumnType("datetime2");
@@ -116,7 +119,7 @@ namespace Hotel.Migrations
                     b.Property<DateTime>("startDate")
                         .HasColumnType("datetime2");
 
-                    b.HasKey("CustomerId", "RoomId");
+                    b.HasKey("UserId", "RoomId");
 
                     b.HasIndex("RoomId");
 
@@ -138,35 +141,6 @@ namespace Hotel.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Branches");
-                });
-
-            modelBuilder.Entity("Hotel.Models.Customer", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UserName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("password")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("phone")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Coustomers");
                 });
 
             modelBuilder.Entity("Hotel.Models.Room", b =>
@@ -341,17 +315,17 @@ namespace Hotel.Migrations
 
             modelBuilder.Entity("Hotel.Models.Booking", b =>
                 {
-                    b.HasOne("Hotel.Models.Customer", "Customer")
-                        .WithMany("Bokings")
-                        .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
                     b.HasOne("Hotel.Models.Room", "Room")
                         .WithMany("Bokings")
                         .HasForeignKey("RoomId")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.Navigation("Customer");
+                    b.HasOne("Hotel.Models.ApplicationUser", "ApplicationUser")
+                        .WithMany("Bokings")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("ApplicationUser");
 
                     b.Navigation("Room");
                 });
@@ -416,14 +390,14 @@ namespace Hotel.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Hotel.Models.ApplicationUser", b =>
+                {
+                    b.Navigation("Bokings");
+                });
+
             modelBuilder.Entity("Hotel.Models.Branch", b =>
                 {
                     b.Navigation("Rooms");
-                });
-
-            modelBuilder.Entity("Hotel.Models.Customer", b =>
-                {
-                    b.Navigation("Bokings");
                 });
 
             modelBuilder.Entity("Hotel.Models.Room", b =>

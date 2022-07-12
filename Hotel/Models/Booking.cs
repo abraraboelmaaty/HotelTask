@@ -5,6 +5,7 @@ namespace Hotel.Models
 {
     public class Booking
     {
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public DateTime startDate { get; set; }
 

@@ -2,7 +2,7 @@
 
 namespace Hotel.Repositories
 {
-    public class BookingRepo:IRepository<Booking>,IRepoUpdateDelete<Booking>
+    public class BookingRepo : IRepository<Booking>, IRepoUpdateDelete<Booking>
     {
         HotelEnteties context;
         public BookingRepo(HotelEnteties _context)
@@ -55,7 +55,7 @@ namespace Hotel.Repositories
             return booking;
         }
 
-        public int update(int id,  Booking booking)
+        public int update(int id, Booking booking)
         {
             Booking? oldbooking = context.Bookings.FirstOrDefault(b => b.Id == id);
             if (booking == null)

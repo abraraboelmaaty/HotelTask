@@ -32,27 +32,21 @@ namespace Hotel.Models
                       .HasForeignKey(B => B.RoomId)
                       .OnDelete(DeleteBehavior.Restrict)
                       .IsRequired(false);
-            //modelBuilder.Entity<Room>()
-            //        .HasOne(R => R.Branch)
-            //        .WithMany(Br => Br.Rooms)
-            //        .HasForeignKey(R => R.BranchId)
-            //        .OnDelete(DeleteBehavior.Restrict)
-            //        .IsRequired(false);
-            //modelBuilder.Entity<Room>()
-            //          .HasOne(R => R.Type)
-            //          .WithMany(T => T.Rooms)
-            //          .HasForeignKey(R => R.TypeId)
-            //          .OnDelete(DeleteBehavior.Restrict)
-            //          .IsRequired(false);
-            //base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<Room>()
-              .Property(r => r.RoomType)
-              .HasConversion<string>()
-              .HasMaxLength(20);
+                      .Property(r => r.RoomType)
+                      .HasConversion<string>()
+                      .HasMaxLength(20);
             modelBuilder.Entity<Room>()
-              .Property(r => r.Avilable)
-              .HasDefaultValue(true);
+                      .Property(r => r.Avilable)
+                      .HasDefaultValue(true);
+            modelBuilder.Entity<Booking>()
+                      .Property(b => b.Id)
+                      .ValueGeneratedOnAdd();
+
+
             base.OnModelCreating(modelBuilder);
+           
+
         }
     }
 }
