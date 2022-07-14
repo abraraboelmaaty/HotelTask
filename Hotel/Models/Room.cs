@@ -1,4 +1,6 @@
 ﻿using Hotel.Data;
+using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
@@ -10,7 +12,10 @@ namespace Hotel.Models
         {
             Bokings = new List<Booking>();
         }
+        //[Index(IsUnique = true)]
+        //[StringLength(12)]
         public int Id { get; set; }
+
         public string Description { get; set; }
         public int Number { get; set; }
         public RoomType RoomType { get; set; }

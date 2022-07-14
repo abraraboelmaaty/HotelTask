@@ -25,7 +25,7 @@ namespace Hotel.Controllers
             RoomBranch = _RoomBranch;
         }
         [HttpGet]
-        //[Authorize]
+        [Authorize]
         public ActionResult getAll()
         {
             if (RoomRepo.getAll().Count > 0)

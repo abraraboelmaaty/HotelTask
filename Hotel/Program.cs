@@ -33,6 +33,7 @@ builder.Services.AddScoped<IRepository<Booking>, BookingRepo>();
 builder.Services.AddScoped<IRepoUpdateDelete<Booking>, BookingRepo>();
 builder.Services.AddScoped<IRepositoryBooking<Booking>, BookingRepo>();
 builder.Services.AddScoped<IAuthRepository, AuthRepo>();
+builder.Services.AddScoped<IRepoGetAllRegisterUser, getAllUsersRepo>();
 
 builder.Services.AddAuthentication(options =>
 {

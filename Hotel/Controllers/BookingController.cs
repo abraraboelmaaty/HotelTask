@@ -30,7 +30,7 @@ namespace Hotel.Controllers
         }
 
         //getById
-        [HttpGet("{id:int}")]
+        [HttpGet("{id}")]
         public ActionResult getById(int id)
         {
             Booking? booking = BookingRepo.getById(id);
@@ -56,8 +56,9 @@ namespace Hotel.Controllers
         //        return BadRequest(ModelState);
         //    }
         //}
-        [HttpPost]
-        public ActionResult Create(Booking booking,int id)
+        [HttpPost("{id}")]
+        [Authorize]
+        public ActionResult Create([FromBody]Booking booking,int id)
         {
             if (ModelState.IsValid)
             {
@@ -78,7 +79,7 @@ namespace Hotel.Controllers
         }
         //update
         [HttpPut("{id}")]
-        public ActionResult edit(int id, Booking booking)
+        public ActionResult edit(int id,[FromBody] Booking booking)
         {
             if (ModelState.IsValid)
             {
@@ -97,8 +98,9 @@ namespace Hotel.Controllers
         }
         //delete
         [HttpDelete("{id}")]
-        public ActionResult delete(int id, Booking? booking)
+        public ActionResult delete(int id)
         {
+           
             int numOfRows = BookingUpdateDelete.Delete(id);
             if (numOfRows <= 0)
             {
@@ -106,7 +108,7 @@ namespace Hotel.Controllers
             }
             else
             {
-                return Ok(booking);
+                return NoContent(); ;
             }
         }
     }

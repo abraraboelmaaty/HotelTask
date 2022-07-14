@@ -11,10 +11,11 @@ namespace Hotel.Controllers
     public class AccountController : ControllerBase
     {
         private readonly IAuthRepository _authRepo;
-
-        public AccountController(IAuthRepository authRepo)
+        private readonly IRepoGetAllRegisterUser _usersRepo;
+        public AccountController(IAuthRepository authRepo, IRepoGetAllRegisterUser usersRepo)
         {
             _authRepo = authRepo;
+            _usersRepo = usersRepo;
         }
 
         [HttpPost("register")]
@@ -56,5 +57,14 @@ namespace Hotel.Controllers
 
             return Ok(model);
         }
+        [HttpGet]
+        public ActionResult getAll()
+        {
+            if (_usersRepo.getAll().Count > 0)
+                return Ok(_usersRepo.getAll());
+            else
+                return NotFound();
+        }
+
     }
 }

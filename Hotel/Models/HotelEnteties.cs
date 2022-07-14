@@ -56,6 +56,10 @@ namespace Hotel.Models
             modelBuilder.Entity<Room>()
                      .Property(r => r.CanBookingmore)
                      .HasDefaultValue(true);
+            //modelBuilder.Entity<Room>()
+            //    .Property(r => r.Id)
+            //    .HasMaxLength(12)
+            //    .HasColumnAnnotation("Index", new IndexAnnotation(new IndexAttribute("UQ_UniqueStringKey") { IsUnique = true }));
             //modelBuilder.Entity<Booking>()
             //          .Property(b => b.Id)
             //          .ValueGeneratedOnAdd();

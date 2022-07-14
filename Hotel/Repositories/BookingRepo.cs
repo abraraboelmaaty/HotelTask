@@ -29,11 +29,15 @@ namespace Hotel.Repositories
     
     public int booking(Booking booking, int id)
         {
+            Room? room = context.Rooms.FirstOrDefault(r => r.Id == id);
             bool roomAvliable = IsRoomAvilable(id);
             if (roomAvliable)
             {
+                 booking.RoomId = id;
+                 booking.BranchId = room.BranchId; 
+                 
                 context.Add(booking);
-                Room? room = context.Rooms.FirstOrDefault(r => r.Id == id);
+                //Room? room = context.Rooms.FirstOrDefault(r => r.Id == id);
                 if (room.RoomType == 0)
                 {
                     room.Status = (RoomStatus)1;
