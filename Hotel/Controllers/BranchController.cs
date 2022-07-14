@@ -34,7 +34,7 @@ namespace Hotel.Controllers
                 return NotFound();
         }
 
-        [HttpGet("id")]
+        [HttpGet("{id}")]
         public ActionResult getById(int id)
         {
             Branch branch = BranchRepo.getById(id);
@@ -45,7 +45,7 @@ namespace Hotel.Controllers
         }
 
         [HttpPost]
-        public ActionResult Add(Branch branch)
+        public ActionResult Add([FromBody]Branch branch)
         {
             BranchRepo.creat(branch);
             return Created("url", branch);

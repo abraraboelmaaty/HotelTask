@@ -11,11 +11,11 @@ namespace Hotel.Models
         public HotelEnteties(DbContextOptions options) : base(options)
         { }
         //public DbSet<Customer> Coustomers { get; set; }
-        public DbSet<ApplicationUser> ApplicationUsers { get; set; }
-        public DbSet<Booking> Bookings { get; set; }
-        public DbSet<Room> Rooms { get; set; }
+        public virtual DbSet<ApplicationUser> ApplicationUsers { get; set; }
+        public virtual DbSet<Booking> Bookings { get; set; }
+        public virtual DbSet<Room> Rooms { get; set; }
         //public DbSet<RoomType> Types { get; set; }
-        public DbSet<Branch> Branches { get; set; }
+        public virtual DbSet<Branch> Branches { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -55,7 +55,7 @@ namespace Hotel.Models
                      .HasDefaultValue(0);
             modelBuilder.Entity<Room>()
                      .Property(r => r.CanBookingmore)
-                     .HasDefaultValue(false);
+                     .HasDefaultValue(true);
             //modelBuilder.Entity<Booking>()
             //          .Property(b => b.Id)
             //          .ValueGeneratedOnAdd();

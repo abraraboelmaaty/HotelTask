@@ -661,4 +661,9 @@ H:\ابرار\ITI\Hotel\HotelTask\Hotel\obj\Debug\net6.0\Hotel.dll
 H:\ابرار\ITI\Hotel\HotelTask\Hotel\obj\Debug\net6.0\ref\Hotel.dll
 H:\ابرار\ITI\Hotel\HotelTask\Hotel\obj\Debug\net6.0\Hotel.pdb
 H:\ابرار\ITI\Hotel\HotelTask\Hotel\obj\Debug\net6.0\Hotel.genruntimeconfig.cache
+H:\ابرار\ITI\HotelTask\HotelTask\Hotel\bin\Debug\net6.0\Castle.Core.dll
+H:\ابرار\ITI\HotelTask\HotelTask\Hotel\bin\Debug\net6.0\Microsoft.AspNetCore.JsonPatch.dll
+H:\ابرار\ITI\HotelTask\HotelTask\Hotel\bin\Debug\net6.0\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
+H:\ابرار\ITI\HotelTask\HotelTask\Hotel\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Proxies.dll
+H:\ابرار\ITI\HotelTask\HotelTask\Hotel\bin\Debug\net6.0\Newtonsoft.Json.Bson.dll
 H:\ابرار\ITI\HotelTask\HotelTask\Hotel\obj\Debug\net6.0\Hotel.csproj.AssemblyReference.cache

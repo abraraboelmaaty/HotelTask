@@ -3,7 +3,7 @@ using Hotel.Models;
 
 namespace Hotel.Repositories
 {
-    public class RoomRepo : IRepository<Room>  ,IRepoGetByNumber<Room>,IRepoGetByTpe<Room>
+    public class RoomRepo : IRepository<Room>  ,IRepoGetByNumber<Room>,IRepoGetByTpe<Room>,IAvilableRooms,IReposatoryGetByBransh<Room>
     {
         HotelEnteties context;
         public RoomRepo(HotelEnteties _context)
@@ -48,6 +48,7 @@ namespace Hotel.Repositories
         //    }
         //}
 
+        
         public ICollection<Room> getAll()
         {
             return context.Rooms.ToList();
@@ -63,11 +64,25 @@ namespace Hotel.Repositories
             return context.Rooms.Where(r => r.RoomType == type).ToList();
         }
 
+        public ICollection<Room> getAvilableRooms()
+        {
+            List<Room> rooms = context.Rooms.Where(r => r.Status == 0).ToList();
+            return rooms;
+        }
+
+        public ICollection<Room> GetByBransh(int branchId)
+        {
+            return context.Rooms.Where(r => r.BranchId == branchId).ToList();
+
+        }
+
         public Room getById(int id)
         {
             Room? room = context.Rooms.FirstOrDefault(r => r.Id == id);
             return room;
         }
+
+        
 
         //public int update(int id, Room entity)
         //{

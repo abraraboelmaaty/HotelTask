@@ -4,6 +4,10 @@ namespace Hotel.Models
 {
     public class Branch
     {
+        public Branch()
+        {
+            Bookings = new List<Booking>();
+        }
         public int Id { get; set; }
         public string location { get; set; }
         [JsonIgnore]

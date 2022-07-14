@@ -35,10 +35,15 @@ namespace Hotel.Repositories
                 context.Add(booking);
                 Room? room = context.Rooms.FirstOrDefault(r => r.Id == id);
                 if (room.RoomType == 0)
+                {
                     room.Status = (RoomStatus)1;
+                    room.CanBookingmore = false;
+                    room.CoustomerCount++;
+                }
+                    
                 else if (room.RoomType == (RoomType)1 && room.CoustomerCount != 2)
                 {
-                    room.CanBookingmore = true;
+                    //room.CanBookingmore = true;
                     room.CoustomerCount++;
                 }
                     
@@ -49,7 +54,7 @@ namespace Hotel.Repositories
                 }
                 else if (room.RoomType == (RoomType)2 && room.CoustomerCount != 3)
                 {
-                    room.CanBookingmore = true;
+                    //room.CanBookingmore = true;
                     room.CoustomerCount++;
                 }
 

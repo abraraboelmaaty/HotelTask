@@ -6,6 +6,10 @@ namespace Hotel.Models
 {
     public class Room
     {
+        public Room()
+        {
+            Bokings = new List<Booking>();
+        }
         public int Id { get; set; }
         public string Description { get; set; }
         public int Number { get; set; }
@@ -17,11 +21,7 @@ namespace Hotel.Models
         [ForeignKey("Branch")]
        
         public virtual int BranchId { get; set; }
-        //[ForeignKey("Type")]
-        //[JsonIgnore]
-        //public int? TypeId { get; set; }
-        //[JsonIgnore]
-        //public virtual RoomType? Type { get; set; }
+       
         [JsonIgnore]
         public virtual List<Booking>? Bokings {get;set;}
         [JsonIgnore]
